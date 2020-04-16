@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  width: 600px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+}
+
+.history {
+  width: 250px;
+  padding: 20px;
+  margin-top: 40px;
+  height: 290px;
+  overflow: scroll;
+  background-color: #eee;
+}
+
+.history ul li {
+  font-size: 20px;
+}
+
+.calculator {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #eee;
+  margin-top: 40px;
+  -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.calculator button {
+  width: 60px;
+  height: 50px;
+  border: 1px solid #ccc;
+  background: #eee;
+  margin: 2px;
+}
+
+.button-row {
+  display: inline;
+}
+
+.btn-row {
+  height: 53px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.button-result {
+  background-color: #85c1e9 !important;
+}
+
+.button-0 {
+  width: 100px !important;
+}
+
+.calculator-output {
+  padding: 18px 5px;
+  font-size: 25px;
+  text-align: end;
+  min-height: 30px;
+  max-width: 231px;
+  overflow: hidden;
+}
+
+.button-remove {
+  width: 25px;
+  visibility: initial;
+}
+
+.characters-four-raw {
+  display: inline;
+  visibility: visible;
+}
+
+.characters-two-raw {
+  display: none;
+  visibility: hidden;
+}
+
+@media (min-width: 200px) and (max-width: 500px) {
+  .container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .calculator {
+    width: 100%;
+  }
+  .calculator button {
+    margin: 3px;
+  }
+  .characters-two-raw {
+    display: inline;
+    visibility: visible;
+  }
+  .characters-four-raw {
+    display: none;
+    visibility: hidden;
+  }
+  .calculator-output {
+    max-width: 100%;
+  }
+}
