@@ -13,19 +13,19 @@ function App() {
 
   useEffect(() => {
     getCalculation()
-      .then((data) => setStore([]))
+      .then((data) => setStore(data.data))
       .finally(setLoading(false));
   }, []);
 
   async function getCalculation() {
     setLoading(true);
 
-    let response = await axios.get("https://api.github.com");
-    return response;
+    let data = await axios.get("http://localhost:3000/calculations");
+    return data;
   }
 
   async function postCalculation(obj) {
-    let response = await axios.get("https://api.github.com");
+    let response = await axios.post("http://localhost:3000/calculations", obj);
     return response;
   }
 
@@ -87,11 +87,16 @@ function App() {
           const newCalculation = {
             calculation: val,
             date: new Date(),
+            id: new Date(),
           };
 
           const result = eval(val);
 
-          postCalculation().finally(() => setStore([...store, newCalculation]));
+          postCalculation(newCalculation).then(() =>
+            getCalculation()
+              .then((data) => setStore(data.data))
+              .finally(setLoading(false))
+          );
           setVal(result);
         }
       }
@@ -154,15 +159,16 @@ function App() {
 
     if (name === "C" || name === "CE") {
       setVal("");
-      if (name === "CE") {
-        setStore([]);
-      }
     }
   }
 
   return (
     <div className="container">
-      {loading ? "loading..." : store && <History store={store} />}
+      {loading ? (
+        <div className="loader">loading... please wait</div>
+      ) : (
+        store && <History store={store} />
+      )}
       <div className="calculator">
         <div className="calculator-output">{val}</div>
         <CharactersFourRow
