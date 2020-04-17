@@ -5,16 +5,17 @@ import History from "./components/history";
 import CharactersTwoRow from "./components/charactersTwoRow";
 import CharactersFourRow from "./components/charactersFourRow";
 import axios from "axios";
+import moment from "moment";
 
 function App() {
   const [val, setVal] = useState("");
-  const [store, setStore] = useState(null);
+  const [calculations, setCalculations] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getCalculation()
-      .then((data) => setStore(data.data))
-      .finally(setLoading(false));
+      .then((data) => setCalculations(data.data))
+      .then(setLoading(false));
   }, []);
 
   async function getCalculation() {
@@ -32,37 +33,15 @@ function App() {
   function handleClick(e) {
     const name = e.target.name;
 
-    if (
-      name === "1" ||
-      name === "2" ||
-      name === "3" ||
-      name === "4" ||
-      name === "5" ||
-      name === "6" ||
-      name === "7" ||
-      name === "8" ||
-      name === "9" ||
-      name === "0"
-    ) {
+    if (!Number.isNaN(+name)) {
       setVal(val + name);
     }
 
     if (val.length > 0) {
-      const lastLetter = val ? val.slice(-1) : val;
+      const lastCaracter = val ? val.slice(-1) : val;
 
       if (name === ".") {
-        if (
-          lastLetter === "1" ||
-          lastLetter === "2" ||
-          lastLetter === "3" ||
-          lastLetter === "4" ||
-          lastLetter === "5" ||
-          lastLetter === "6" ||
-          lastLetter === "7" ||
-          lastLetter === "8" ||
-          lastLetter === "9" ||
-          lastLetter === "0"
-        ) {
+        if (!Number.isNaN(+lastCaracter)) {
           setVal(val + name);
         }
       }
@@ -72,21 +51,10 @@ function App() {
       }
 
       if (name === "=") {
-        if (
-          lastLetter === "1" ||
-          lastLetter === "2" ||
-          lastLetter === "3" ||
-          lastLetter === "4" ||
-          lastLetter === "5" ||
-          lastLetter === "6" ||
-          lastLetter === "7" ||
-          lastLetter === "8" ||
-          lastLetter === "9" ||
-          lastLetter === "0"
-        ) {
+        if (!Number.isNaN(+lastCaracter)) {
           const newCalculation = {
             calculation: val,
-            date: new Date(),
+            date: moment(new Date()).format("hh:mm:ss: DD-MM-YYYY"),
             id: new Date(),
           };
 
@@ -94,26 +62,15 @@ function App() {
 
           postCalculation(newCalculation).then(() =>
             getCalculation()
-              .then((data) => setStore(data.data))
-              .finally(setLoading(false))
+              .then((data) => setCalculations(data.data))
+              .then(setLoading(false))
           );
           setVal(result);
         }
       }
 
       if (name === "+/-") {
-        if (
-          lastLetter === "1" ||
-          lastLetter === "2" ||
-          lastLetter === "3" ||
-          lastLetter === "4" ||
-          lastLetter === "5" ||
-          lastLetter === "6" ||
-          lastLetter === "7" ||
-          lastLetter === "8" ||
-          lastLetter === "9" ||
-          lastLetter === "0"
-        ) {
+        if (!Number.isNaN(+lastCaracter)) {
           const getVal = val
             .match(/[+-]?\d+(?:\.\d+)?/g)
             .map(Number)
@@ -140,18 +97,7 @@ function App() {
         name === "%" ||
         name === "*"
       ) {
-        if (
-          lastLetter === "1" ||
-          lastLetter === "2" ||
-          lastLetter === "3" ||
-          lastLetter === "4" ||
-          lastLetter === "5" ||
-          lastLetter === "6" ||
-          lastLetter === "7" ||
-          lastLetter === "8" ||
-          lastLetter === "9" ||
-          lastLetter === "0"
-        ) {
+        if (!Number.isNaN(+lastCaracter)) {
           setVal(val + name);
         }
       }
@@ -167,7 +113,7 @@ function App() {
       {loading ? (
         <div className="loader">loading... please wait</div>
       ) : (
-        store && <History store={store} />
+        calculations && <History store={calculations} />
       )}
       <div className="calculator">
         <div className="calculator-output">{val}</div>
